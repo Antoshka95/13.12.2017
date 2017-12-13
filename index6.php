@@ -1,5 +1,5 @@
 <a href="index.php?status=1">Текущие студенты</a>
-<a href="index.php?status=0">Бывшие студенты</a> 
+<a href="index.php?status=0">Бывшие студенты</a>
 
 <?php
 $dbParams = require(
@@ -17,18 +17,18 @@ if(isset($_GET['status'])){
 		->prepare('
 		SELECT *
 		FROM `student`
-		WHERE `status` = :status'); //с фильтрацией запроста с пустым статусом
+		WHERE `status` = :status'); 
 
-$studentsQuery
-	->execute(['status' => $_GET['status']]);//заготовкка с пустым статусом
-	$students=$studentsQuery//содержит значение запроса
-	->fetchALL(PDO::FETCH_ASSOC);//извлекает значение запроса и возвращает записи в виде ассоциативного массива
+$students=$studentsQuery
+	->execute(['status' => $_GET['status']]);
+	$students=$studentsQuery
+	->fetchALL(PDO::FETCH_ASSOC);
 	foreach ($students as $student){
 		echo "<p>".
 			htmlspecialchars($student['lastName']).
 			"<a href='index.php?id=" . 
 			urlencode($student['id']) .
-			"'>Закончил обучение</a></p>";//выводим список студентов
+			"'>Закончил обучение</a></p>";
 	}
 }
 
